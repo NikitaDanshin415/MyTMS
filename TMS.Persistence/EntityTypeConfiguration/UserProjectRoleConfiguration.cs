@@ -1,4 +1,4 @@
-﻿using EntityFrameworkTest.Models;
+﻿using TMS.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

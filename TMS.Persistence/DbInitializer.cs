@@ -1,10 +1,12 @@
-﻿namespace TMS.Persistence
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace TMS.Persistence
 {
     public class DbInitializer
     {
         public static void Initialize(TmsDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
         }
     }
 }

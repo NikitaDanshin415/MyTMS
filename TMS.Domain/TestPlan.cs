@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityFrameworkTest.Models
+namespace TMS.Domain
 {
     public class TestPlan
     {

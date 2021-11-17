@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace EntityFrameworkTest.Models
+namespace TMS.Domain
 {
     public class ProjectRole
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string RoleName { get; set; }
-
 
         public List<UserProjectRole> ProjectRoles { get; set; } = new List<UserProjectRole>();
        

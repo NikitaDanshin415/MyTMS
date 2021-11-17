@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace EntityFrameworkTest.Models
+namespace TMS.Domain
 {
     public class User
     {

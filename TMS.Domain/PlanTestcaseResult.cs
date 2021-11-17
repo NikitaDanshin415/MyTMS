@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkTest.Models
+﻿namespace TMS.Domain
 {
     public class PlanTestcaseResult
     {

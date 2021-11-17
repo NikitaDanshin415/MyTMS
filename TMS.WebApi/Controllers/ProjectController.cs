@@ -1,0 +1,83 @@
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TMS.Application.Project.Commands.CreateProject;
+using TMS.Application.Project.Commands.DeleteProject;
+using TMS.Application.Project.Commands.UpdateProject;
+using TMS.Application.Project.Queries.GetProjectDetails;
+using TMS.Application.Project.Queries.GetProjectList;
+using TMS.WebApi.Models;
+
+namespace TMS.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    public class ProjectController : BaseController
+    {
+        private readonly IMapper _mapper;
+
+        public ProjectController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ProjectListVm>> GetAll()
+        {
+            var query = new GetProjectListQuery
+            {
+                UserId = UserId
+            };
+            var vm = await Mediator.Send(query);
+
+            return Ok(vm);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProjectListVm>> Get(Guid id)
+        {
+            var query = new GetProjectDetailsQuery()
+            {
+                UserId = UserId,
+                Id = id
+            };
+            var vm = await Mediator.Send(query);
+
+            return Ok(vm);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateProjectDto createProjectDto)
+        {
+            var command = _mapper.Map<CreateProjectCommand>(createProjectDto);
+            command.UserId = UserId;
+            var projectId = await Mediator.Send(command);
+
+            return Ok(projectId);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Guid>> Create([FromBody] UpdateProjectDto updateProjectDto)
+        {
+            var command = _mapper.Map<UpdateProjectCommand>(updateProjectDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Guid>> Delete(Guid id)
+        {
+            var command = new DeleteProjectCommand
+            {
+                Id = id,
+                UserId = UserId
+            };
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+    }
+}

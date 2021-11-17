@@ -1,7 +1,6 @@
-﻿using EntityFrameworkTest.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TMS.Application.Interfaces;
+using TMS.Domain;
 
 namespace TMS.Persistence.EntityTypeConfiguration
 {
