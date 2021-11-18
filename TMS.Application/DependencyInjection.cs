@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TMS.Application.Common.Behaviors;
 
 namespace TMS.Application
 {
@@ -10,6 +12,8 @@ namespace TMS.Application
             this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssemblies(new[] {Assembly.GetExecutingAssembly()});
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             return services;
         }
     }

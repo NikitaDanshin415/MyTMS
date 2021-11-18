@@ -21,7 +21,7 @@ namespace TMS.Application.Project.Commands.DeleteProject
         {
             var entity = await _dbContext.Projects.FindAsync(new object[] {request.Id}, cancellationToken);
 
-            if (entity == null || entity.UserId != request.UserId)
+            if (entity == null)
             {
                 throw new NotFoundException(nameof(entity), request.Id);
             }

@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using TMS.Application;
 using TMS.Application.Common.Mapping;
 using TMS.Application.Interfaces;
 using TMS.Persistence;
+using TMS.WebApi.Middleware;
 
 namespace TMS.WebApi
 {
@@ -39,6 +42,19 @@ namespace TMS.WebApi
                     policy.AllowAnyMethod();
                     policy.AllowAnyOrigin();
                 }));
+
+            services.AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme =
+                        JwtBearerDefaults.AuthenticationScheme;
+                    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:44383/";
+                    options.Audience = "TmsWebApi";
+                    options.RequireHttpsMetadata = false;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,10 +65,12 @@ namespace TMS.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomExeptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

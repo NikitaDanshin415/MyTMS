@@ -31,7 +31,7 @@ namespace TMS.Application.Project.Commands.CreateProject
             {
                 ProjectName = request.ProjectName,
                 Id = new Guid(),
-                ProjectStatusId = 0,
+
                 AdditionDate = DateTime.Now,
 
             };
@@ -46,16 +46,16 @@ namespace TMS.Application.Project.Commands.CreateProject
                 throw new NotFoundException(nameof(Project), request.UserId);
             }
 
-            var userProjectRole = new UserProjectRole
+            var userProjectRole = new ProjectParticipants
             {
                 UserId = request.UserId, 
                 ProjectId = project.Id,
                 ProjectRoleId = role.Id, 
-                AdditionToProject = DateTime.Now
+                AdditionToProject = DateTime.Now,
             };
 
             await _DbContext.Projects.AddAsync(project, cancellationToken);
-            await _DbContext.UserProjectRoles.AddAsync(userProjectRole, cancellationToken);
+            await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
             await _DbContext.SaveChangesAsync(cancellationToken);
             
             return project.Id;

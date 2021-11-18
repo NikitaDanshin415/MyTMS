@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Application.Project.Commands.CreateProject;
 using TMS.Application.Project.Commands.DeleteProject;
@@ -13,6 +14,7 @@ using TMS.WebApi.Models;
 namespace TMS.WebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class ProjectController : BaseController
     {
         private readonly IMapper _mapper;
@@ -23,6 +25,7 @@ namespace TMS.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<ProjectListVm>> GetAll()
         {
             var query = new GetProjectListQuery
@@ -48,6 +51,7 @@ namespace TMS.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateProjectDto createProjectDto)
         {
             var command = _mapper.Map<CreateProjectCommand>(createProjectDto);
@@ -58,6 +62,7 @@ namespace TMS.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] UpdateProjectDto updateProjectDto)
         {
             var command = _mapper.Map<UpdateProjectCommand>(updateProjectDto);
@@ -67,6 +72,7 @@ namespace TMS.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<Guid>> Delete(Guid id)
         {
             var command = new DeleteProjectCommand

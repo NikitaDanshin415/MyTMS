@@ -23,7 +23,7 @@ namespace TMS.Application.Project.Queries.GetProjectList
         public async Task<ProjectListVm> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
         {
             var projectQuery = await _dbContext.Projects
-                .Where(project => project.UserId == request.UserId)
+                //.Where(project => project.UserId == request.UserId)
                 .ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

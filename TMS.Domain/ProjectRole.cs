@@ -8,7 +8,7 @@ namespace TMS.Domain
         public Guid Id { get; set; }
         public string RoleName { get; set; }
 
-        public List<UserProjectRole> ProjectRoles { get; set; } = new List<UserProjectRole>();
+        public List<ProjectParticipants> ProjectRoles { get; set; } = new List<ProjectParticipants>();
        
     }
 }

@@ -14,7 +14,7 @@ namespace TMS.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
         public DbSet<ProjectRole> ProjectRoles { get; set; }
-        public DbSet<UserProjectRole> UserProjectRoles { get; set; }
+        public DbSet<ProjectParticipants> ProjectParticipants { get; set; }
 
 
 
@@ -26,7 +26,10 @@ namespace TMS.Persistence
         {
             modelBuilder.ApplyConfiguration(new UsersConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new ProjectStatusConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectParticipantsConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

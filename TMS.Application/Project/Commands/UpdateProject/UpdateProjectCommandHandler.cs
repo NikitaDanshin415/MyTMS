@@ -23,7 +23,7 @@ namespace TMS.Application.Project.Commands.UpdateProject
                 await _dbContext.Projects.FirstOrDefaultAsync(project => project.Id == request.Id, cancellationToken);
 
             //если проект не найден или автор проекта и пользовательне совпадают, возвращаем исключение
-            if (entity == null || entity.UserId != request.UserId)
+            if (entity == null)
             {
                 throw new NotFoundException(nameof(Project), request.Id);
             }

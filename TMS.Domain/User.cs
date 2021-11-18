@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TMS.Domain
 {
     public class User
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Surname { get; set; }
         public string Secname { get; set; }
@@ -12,7 +13,8 @@ namespace TMS.Domain
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public List<UserProjectRole> UserProjectRoles { get; set; } = new List<UserProjectRole>();
+
+        public List<ProjectParticipants> UserProjectRoles { get; set; } = new List<ProjectParticipants>();
 
     }
 }

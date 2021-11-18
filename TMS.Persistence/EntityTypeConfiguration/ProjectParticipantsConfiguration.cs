@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TMS.Persistence.EntityTypeConfiguration
 {
-    public class UserProjectRoleConfiguration : IEntityTypeConfiguration<UserProjectRole>
+    public class ProjectParticipantsConfiguration : IEntityTypeConfiguration<ProjectParticipants>
     {
-        public void Configure(EntityTypeBuilder<UserProjectRole> builder)
+        public void Configure(EntityTypeBuilder<ProjectParticipants> builder)
         {
             builder.HasAlternateKey(e => new { e.ProjectId, e.UserId });
         }
