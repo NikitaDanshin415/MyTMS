@@ -27,7 +27,8 @@ namespace TMS.WebApi
                 }
                 catch (Exception exception)
                 {
-
+                    var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(exception, "An eroor occurred while app initialization | Program.cs");
                 }
             }
 

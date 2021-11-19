@@ -10,7 +10,7 @@ using TMS.Persistence;
 namespace TMS.Persistence.Migrations
 {
     [DbContext(typeof(TmsDbContext))]
-    [Migration("20211118063648_init")]
+    [Migration("20211118194511_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,8 @@ namespace TMS.Persistence.Migrations
                     b.Property<string>("ProjectName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProjectStatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProjectStatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -63,7 +63,7 @@ namespace TMS.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasAlternateKey("ProjectId", "UserId");
 
                     b.HasIndex("ProjectRoleId");
 
@@ -88,9 +88,10 @@ namespace TMS.Persistence.Migrations
 
             modelBuilder.Entity("TMS.Domain.ProjectStatus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("StatusName")
                         .HasColumnType("nvarchar(max)");
@@ -107,7 +108,8 @@ namespace TMS.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Firname")
                         .HasColumnType("nvarchar(max)");
@@ -122,6 +124,8 @@ namespace TMS.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Email");
 
                     b.ToTable("Users");
                 });

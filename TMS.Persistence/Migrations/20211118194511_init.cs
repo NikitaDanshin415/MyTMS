@@ -23,7 +23,8 @@ namespace TMS.Persistence.Migrations
                 name: "ProjectStatus",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     StatusName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -31,21 +32,7 @@ namespace TMS.Persistence.Migrations
                     table.PrimaryKey("PK_ProjectStatus", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Secname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Firname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
+
 
             migrationBuilder.CreateTable(
                 name: "Projects",
@@ -54,7 +41,7 @@ namespace TMS.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdditionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProjectStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,6 +67,7 @@ namespace TMS.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProjectParticipants", x => x.Id);
+                    table.UniqueConstraint("AK_ProjectParticipants_ProjectId_UserId", x => new { x.ProjectId, x.UserId });
                     table.ForeignKey(
                         name: "FK_ProjectParticipants_ProjectRoles_ProjectRoleId",
                         column: x => x.ProjectRoleId,
@@ -99,11 +87,6 @@ namespace TMS.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectParticipants_ProjectId",
-                table: "ProjectParticipants",
-                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectParticipants_ProjectRoleId",

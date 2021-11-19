@@ -6,7 +6,7 @@ namespace TMS.Persistence
     {
         public static void Initialize(TmsDbContext context)
         {
-            // context.Database.Migrate();
+            //context.Database.Migrate();
             context.Database.EnsureCreated();
         }
     }

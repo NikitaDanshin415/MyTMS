@@ -1,14 +1,21 @@
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using TMS.Application;
 using TMS.Application.Common.Mapping;
 using TMS.Application.Interfaces;
+using TMS.Domain;
 using TMS.Persistence;
 using TMS.WebApi.Middleware;
 
@@ -43,18 +50,38 @@ namespace TMS.WebApi
                     policy.AllowAnyOrigin();
                 }));
 
-            services.AddAuthentication(config =>
+            var connectionString = Configuration.GetValue<string>("DbConnection");
+
+            services.AddDbContext<TmsDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddIdentity<User, IdentityRole>(config =>
                 {
-                    config.DefaultAuthenticateScheme =
-                        JwtBearerDefaults.AuthenticationScheme;
-                    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    config.Password.RequiredLength = 4;
+                    config.Password.RequireDigit = false;
+                    config.Password.RequireNonAlphanumeric = false;
+                    config.Password.RequireUppercase = false;
                 })
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "https://localhost:44383/";
-                    options.Audience = "TmsWebApi";
-                    options.RequireHttpsMetadata = false;
-                });
+                .AddEntityFrameworkStores<TmsDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddIdentityServer()
+                .AddAspNetIdentity<User>()
+                .AddInMemoryApiResources(ConfigurationIdentity.ApiResources)
+                .AddInMemoryIdentityResources(ConfigurationIdentity.IdentityResources)
+                .AddInMemoryApiScopes(ConfigurationIdentity.ApiScopes)
+                .AddInMemoryClients(ConfigurationIdentity.Clients)
+                .AddDeveloperSigningCredential();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Tms.Identity";
+                config.LoginPath = "/Auth/Login";
+                config.LogoutPath = "/Auth/Logout";
+            });
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,16 +91,25 @@ namespace TMS.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Styles")),
+                RequestPath = "/styles"
+            });
 
             app.UseCustomExeptionHandler();
             app.UseRouting();
+            app.UseIdentityServer();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
