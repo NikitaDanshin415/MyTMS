@@ -9,7 +9,6 @@ namespace TMS.Persistence.EntityTypeConfiguration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(e => e.Id);
-            builder.HasAlternateKey(e => e.Email);
         }
     }
 }

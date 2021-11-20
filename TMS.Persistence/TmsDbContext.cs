@@ -10,7 +10,7 @@ namespace TMS.Persistence
 {
     public class TmsDbContext : DbContext, ITmsDbContext
     {
-        public DbSet<User> Users { get; set; } 
+        public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
         public DbSet<ProjectRole> ProjectRoles { get; set; }
@@ -24,7 +24,6 @@ namespace TMS.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UsersConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectStatusConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectRoleConfiguration());

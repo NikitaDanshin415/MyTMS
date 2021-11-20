@@ -48,7 +48,7 @@ namespace TMS.Application.Project.Commands.CreateProject
 
             var userProjectRole = new ProjectParticipants
             {
-                UserId = request.UserId, 
+                UserId = request.UserId.ToString(), 
                 ProjectId = project.Id,
                 ProjectRoleId = role.Id, 
                 AdditionToProject = DateTime.Now,
