@@ -23,10 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Behaviors\" />
-    <Folder Include="ProjectRoles\Queries\" />
-    <Folder Include="UserProjectRoles\" />
-    <Folder Include="ProjectStatus\" />
-    <Folder Include="Users\" />
   </ItemGroup>
 
 </Project>

@@ -12,10 +12,8 @@ namespace TMS.WebApi.Middleware
     {
         private readonly RequestDelegate _next;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next)
-        {
+        public CustomExceptionHandlerMiddleware(RequestDelegate next) =>
             _next = next;
-        }
 
         public async Task Invoke(HttpContext context)
         {
@@ -43,13 +41,12 @@ namespace TMS.WebApi.Middleware
                     code = HttpStatusCode.NotFound;
                     break;
             }
-
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
 
             if (result == string.Empty)
             {
-                result = JsonSerializer.Serialize(new {error = exception.Message});
+                result = JsonSerializer.Serialize(new { errpr = exception.Message });
             }
 
             return context.Response.WriteAsync(result);

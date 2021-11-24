@@ -9,6 +9,9 @@ namespace TMS.Persistence.EntityTypeConfiguration
         public void Configure(EntityTypeBuilder<ProjectStatus> builder)
         {
             builder.HasKey(projectStatus => projectStatus.Id);
+            builder.HasAlternateKey(e => e.StatusName);
+            builder.HasData(new ProjectStatus {Id = 1, StatusName = "Open"});
+            builder.HasData(new ProjectStatus { Id = 2, StatusName = "Close" });
         }
     }
 }

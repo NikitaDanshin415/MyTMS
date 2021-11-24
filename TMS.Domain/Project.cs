@@ -13,6 +13,6 @@ namespace TMS.Domain
 
         public ProjectStatus ProjectStatus { get; set; }
 
-        public List<ProjectParticipants> UserProjectRoles { get; set; } = new List<ProjectParticipants>();
+        public List<ProjectParticipants> ProjectParticipant { get; set; } = new List<ProjectParticipants>();
     }
 }

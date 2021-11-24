@@ -14,18 +14,15 @@ using TMS.WebApi.Models;
 
 namespace TMS.WebApi.Controllers
 {
-    [ApiVersionNeutral]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [Produces("application/json")]
     [Route("api/{version:apiVersion}/[controller]")]
-    [Authorize]
     public class ProjectController : BaseController
     {
         private readonly IMapper _mapper;
 
-        public ProjectController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
+        public ProjectController(IMapper mapper) => _mapper = mapper;
 
         /// <summary>
         ///  Получение списка всех проектов пользователя.
@@ -51,7 +48,10 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ProjectListVm>> Get(Guid id)
         {
             var query = new GetProjectDetailsQuery()
@@ -64,6 +64,8 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateProjectDto createProjectDto)

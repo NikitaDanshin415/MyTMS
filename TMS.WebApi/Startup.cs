@@ -23,10 +23,7 @@ namespace TMS.WebApi
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -56,7 +53,7 @@ namespace TMS.WebApi
                 })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:44383/";
+                    options.Authority = "https://localhost:5001/";
                     options.Audience = "TmsWebApi";
                     options.RequireHttpsMetadata = false;
                 });
@@ -69,6 +66,8 @@ namespace TMS.WebApi
 
             services.AddSwaggerGen();
             services.AddApiVersioning();
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,12 +93,14 @@ namespace TMS.WebApi
                
             });
 
-            app.UseCustomExeptionHandler();
+            //app.UseCustomExeptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseApiVersioning();
             app.UseEndpoints(endpoints =>
             {

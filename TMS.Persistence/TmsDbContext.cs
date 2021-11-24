@@ -16,8 +16,6 @@ namespace TMS.Persistence
         public DbSet<ProjectRole> ProjectRoles { get; set; }
         public DbSet<ProjectParticipants> ProjectParticipants { get; set; }
 
-
-
         public TmsDbContext(DbContextOptions<TmsDbContext> options)
             : base(options)
         { }
