@@ -8,6 +8,7 @@ namespace TMS.Persistence.EntityTypeConfiguration
     {
         public void Configure(EntityTypeBuilder<ProjectParticipants> builder)
         {
+            builder.HasKey(e => e.Id);
             builder.HasAlternateKey(e => new { e.ProjectId, e.UserId });
         }
     }

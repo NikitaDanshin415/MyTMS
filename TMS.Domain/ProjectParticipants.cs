@@ -4,7 +4,7 @@ namespace TMS.Domain
 {
     public class ProjectParticipants
     {
-  public DateTime AdditionToProject { get; set; }
+        public DateTime AdditionToProject { get; set; }
 
         public Guid Id { get; set; }
         public string UserId { get; set; }

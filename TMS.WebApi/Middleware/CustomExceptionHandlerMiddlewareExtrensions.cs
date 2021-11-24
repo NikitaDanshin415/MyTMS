@@ -2,9 +2,10 @@
 
 namespace TMS.WebApi.Middleware
 {
-    public static class CustomExceptionHandlerMiddlewareExtrensions
+    public static class CustomExceptionHandlerMiddlewareExtensions
     {
-        public static IApplicationBuilder UseCustomExeptionHandler(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseCustomExceptionHandler(this
+            IApplicationBuilder builder)
         {
             return builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
         }

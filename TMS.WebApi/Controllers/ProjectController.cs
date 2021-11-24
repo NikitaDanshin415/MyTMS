@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Application.Project.Commands.CreateProject;
 using TMS.Application.Project.Commands.DeleteProject;
@@ -13,19 +14,29 @@ using TMS.WebApi.Models;
 
 namespace TMS.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [Authorize]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Produces("application/json")]
+    [Route("api/{version:apiVersion}/[controller]")]
     public class ProjectController : BaseController
     {
         private readonly IMapper _mapper;
 
-        public ProjectController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
+        public ProjectController(IMapper mapper) => _mapper = mapper;
 
+        /// <summary>
+        ///  Получение списка всех проектов пользователя.
+        /// </summary>
+        /// <remarks>
+        /// GET /project
+        /// </remarks>
+        /// <returns>Returns ProjectListVm</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">Пользователь не авторизован</response>
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ProjectListVm>> GetAll()
         {
             var query = new GetProjectListQuery
@@ -37,7 +48,10 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ProjectListVm>> Get(Guid id)
         {
             var query = new GetProjectDetailsQuery()
@@ -50,6 +64,8 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateProjectDto createProjectDto)
