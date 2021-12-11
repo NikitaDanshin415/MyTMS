@@ -11,7 +11,7 @@ namespace TMS.Application.Interfaces
         public DbSet<User> Users { get; set; }
         public DbSet<Domain.Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
-        public DbSet<ProjectRole> ProjectRoles { get; set; }
+        public DbSet<Domain.ProjectRole> ProjectRoles { get; set; }
         public DbSet<ProjectParticipants> ProjectParticipants { get; set; }
 
 
