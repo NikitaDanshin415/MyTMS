@@ -1,13 +1,12 @@
 ﻿using System;
-using MediatR;
 
-namespace TMS.Application.Project.Commands.UpdateProject
+namespace TMS.Domain.pojo
 {
-    public class UpdateProjectCommand : IRequest
+    public class UserProjects
     {
         public Guid Id { get; set; }
-        public string UserId { get; set; }
         public string ProjectName { get; set; }
         public int ProjectStatusId { get; set; }
+        public string UserId { get; set; }
     }
 }

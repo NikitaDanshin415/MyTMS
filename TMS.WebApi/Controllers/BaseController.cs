@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TMS.WebApi.Controllers
@@ -14,8 +15,8 @@ namespace TMS.WebApi.Controllers
         protected IMediator Mediator =>
             _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
-        internal Guid UserId => !User.Identity.IsAuthenticated
-            ? Guid.Empty
-            : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        internal String UserId => !User.Identity.IsAuthenticated
+            ? String.Empty
+            : User.FindFirst(ClaimTypes.NameIdentifier).Value;
     }
 }

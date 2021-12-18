@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TMS.Application.Project.Commands.CreateProject;
 using TMS.Application.Project.Commands.DeleteProject;
 using TMS.Application.Project.Commands.UpdateProject;
@@ -22,7 +23,10 @@ namespace TMS.WebApi.Controllers
     {
         private readonly IMapper _mapper;
 
-        public ProjectController(IMapper mapper) => _mapper = mapper;
+        public ProjectController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         /// <summary>
         ///  Получение списка всех проектов пользователя.
@@ -39,6 +43,7 @@ namespace TMS.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ProjectListVm>> GetAll()
         {
+            
             var query = new GetProjectListQuery
             {
                 UserId = UserId

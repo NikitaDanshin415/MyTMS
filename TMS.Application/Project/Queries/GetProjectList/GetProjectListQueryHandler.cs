@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +8,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TMS.Application.Interfaces;
+using TMS.Domain;
+using TMS.Domain.pojo;
 
 namespace TMS.Application.Project.Queries.GetProjectList
 {
@@ -22,12 +26,38 @@ namespace TMS.Application.Project.Queries.GetProjectList
 
         public async Task<ProjectListVm> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
         {
-            var projectQuery = await _dbContext.Projects
-                //.Where(project => project.UserId == request.UserId)
-                .ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
+
+            var projectsParticipant =  await _dbContext.Projects.Join(_dbContext.ProjectParticipants,
+                    p => p.Id,
+                    c => c.ProjectId,
+                    (p, c) =>
+                        new
+                        {
+                            Id = p.Id,
+                            ProjectName = p.ProjectName,
+                            ProjectStatusId = p.ProjectStatusId,
+                            UserId = c.UserId,
+                            date = p.AdditionDate
+                        })
+                .Where(e => e.UserId == request.UserId)
                 .ToListAsync(cancellationToken);
 
-            return new ProjectListVm {Projects = projectQuery};
+
+            var result = new List<ProjectLookupDto>();
+
+            projectsParticipant.ForEach(el =>
+            {
+                result.Add(
+                new ProjectLookupDto(){
+                    Id = el.Id,
+                    ProjectStatusId = el.ProjectStatusId,
+                    ProjectName = el.ProjectName
+                });
+            });
+
+
+            return new ProjectListVm {Projects = result };
         }
     }
+
 }

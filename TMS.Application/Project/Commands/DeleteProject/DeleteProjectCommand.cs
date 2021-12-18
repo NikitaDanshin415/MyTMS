@@ -5,7 +5,7 @@ namespace TMS.Application.Project.Commands.DeleteProject
 {
     public class DeleteProjectCommand : IRequest
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public Guid Id { get; set; }
     }
 }

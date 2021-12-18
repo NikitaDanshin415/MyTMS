@@ -8,7 +8,7 @@ namespace TMS.Application.Project.Commands.CreateProject
      */
     public class CreateProjectCommand : IRequest<Guid>
     {
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string ProjectName { get; set; }
     }
 }

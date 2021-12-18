@@ -7,9 +7,9 @@ namespace TMS.WebApi.Models
 {
     public class UpdateProjectDto : IMapWith<UpdateProjectDto>
     {
-        public Guid Id { get; set; }
-        public string ProjectName { get; set; }
+ public string ProjectName { get; set; }
         public string ProjectStatusId { get; set; }
+        public string Id { get; set; }
 
         public void Mapping(Profile profile)
         {

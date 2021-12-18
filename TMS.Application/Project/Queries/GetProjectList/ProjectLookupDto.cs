@@ -4,12 +4,11 @@ using TMS.Application.Common.Mapping;
 
 namespace TMS.Application.Project.Queries.GetProjectList
 {
-    public class ProjectLookupDto : IMapWith<Domain.Project>
+    public class ProjectLookupDto : IMapWith<Domain.pojo.UserProjects>
     {
         public Guid Id { get; set; }
         public string ProjectName { get; set; }
         public int ProjectStatusId { get; set; }
-
 
         public void Mapping(Profile profile)
         {

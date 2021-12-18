@@ -3,7 +3,7 @@ using MediatR;
 
 namespace TMS.Application.ProjectRole.Queries.GetProjectRoleDetails
 {
-    public class GetProjectRoleQuery : IRequest<ProjectRoleDetailsVm>
+    public class GetProjectRoleDetailsQuery : IRequest<ProjectRoleDetailsVm>
     {
         public Guid Id { get; set; }
     }
