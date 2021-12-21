@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TMS.Application.Interfaces;
 using TMS.Domain;
-using TMS.Domain.pojo;
 
 namespace TMS.Application.Project.Queries.GetProjectList
 {
