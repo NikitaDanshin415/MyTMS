@@ -30,32 +30,19 @@ namespace TMS.Application.Project.Queries.GetProjectList
                     p => p.Id,
                     c => c.ProjectId,
                     (p, c) =>
-                        new
+                        new ProjectLookupDto
                         {
                             Id = p.Id,
                             ProjectName = p.ProjectName,
                             ProjectStatusId = p.ProjectStatusId,
                             UserId = c.UserId,
-                            date = p.AdditionDate
+                            Date = p.AdditionDate
                         })
                 .Where(e => e.UserId == request.UserId)
+                //.ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-
-            var result = new List<ProjectLookupDto>();
-
-            projectsParticipant.ForEach(el =>
-            {
-                result.Add(
-                new ProjectLookupDto(){
-                    Id = el.Id,
-                    ProjectStatusId = el.ProjectStatusId,
-                    ProjectName = el.ProjectName
-                });
-            });
-
-
-            return new ProjectListVm {Projects = result };
+            return new ProjectListVm {Projects = projectsParticipant };
         }
     }
 
