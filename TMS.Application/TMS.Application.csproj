@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Behaviors\" />
+    <Folder Include="ProjectParticipant\Queries\GetProjectParticipantDetails\" />
     <Folder Include="ProjectRole\Commands\" />
     <Folder Include="ProjectRole\Queries\GetProjectRolesList\" />
   </ItemGroup>

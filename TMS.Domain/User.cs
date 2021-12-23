@@ -7,7 +7,6 @@ namespace TMS.Domain
     {
         public string Id { get; set; }
 
-        public List<ProjectParticipants> UserProjectRoles { get; set; } = new List<ProjectParticipants>();
 
     }
 }

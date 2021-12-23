@@ -25,7 +25,7 @@ namespace TMS.Application.Project.Queries.GetProjectDetails
 
             var user = await _dbContext.ProjectParticipants
                 .FirstOrDefaultAsync(e => 
-                    e.UserId == request.UserId.ToString() && entity.Id == request.Id, cancellationToken);
+                    e.UserId == request.UserId && entity.Id == request.Id, cancellationToken);
 
             if (entity == null || user == null)
             {

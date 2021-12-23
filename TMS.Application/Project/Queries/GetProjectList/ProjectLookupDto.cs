@@ -32,6 +32,7 @@ namespace TMS.Application.Project.Queries.GetProjectList
                     opt => opt.MapFrom(project => project.AdditionDate))
                 .ForMember(projectDto => projectDto.UserId,
                     x => x.Ignore());
+
         }
     }
 }

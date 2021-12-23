@@ -11,8 +11,5 @@ namespace TMS.Domain
         public DateTime AdditionDate { get; set; }
         public int ProjectStatusId { get; set; }
 
-        public ProjectStatus ProjectStatus { get; set; }
-
-        public List<ProjectParticipants> ProjectParticipant { get; set; } = new List<ProjectParticipants>();
     }
 }

@@ -25,8 +25,7 @@ namespace TMS.Application.Project.Queries.GetProjectList
 
         public async Task<ProjectListVm> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
         {
-
-            var projectsParticipant =  await _dbContext.Projects.Join(_dbContext.ProjectParticipants,
+            var projectsParticipant1 = await _dbContext.Projects.Join(_dbContext.ProjectParticipants,
                     p => p.Id,
                     c => c.ProjectId,
                     (p, c) =>
@@ -42,7 +41,9 @@ namespace TMS.Application.Project.Queries.GetProjectList
                 //.ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new ProjectListVm {Projects = projectsParticipant };
+
+
+            return new ProjectListVm {Projects = projectsParticipant1 };
         }
     }
 

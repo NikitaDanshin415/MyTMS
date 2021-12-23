@@ -14,6 +14,6 @@ namespace TMS.Domain
         public Project Project { get; set; }
 
         public Guid ProjectRoleId { get; set; }
-        public ProjectRole ProjectRoles { get; set; }
+        public ProjectRole ProjectRole { get; set; }
     }
 }
