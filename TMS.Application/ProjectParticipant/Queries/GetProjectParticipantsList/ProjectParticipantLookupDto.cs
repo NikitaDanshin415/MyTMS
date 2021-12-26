@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using AutoMapper;
 using TMS.Application.Common.Mapping;
 using TMS.Domain;
@@ -9,8 +10,11 @@ namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList
     {
         public DateTime AdditionToProject { get; set; }
         public Guid Id { get; set; }
+        [JsonIgnore]
         public string UserId { get; set; }
+        [JsonIgnore]
         public Guid ProjectId { get; set; }
+        [JsonIgnore]
         public Guid ProjectRoleId { get; set; }
         public Domain.Project Project { get; set; }
         public Domain.ProjectRole ProjectRole { get; set; }
