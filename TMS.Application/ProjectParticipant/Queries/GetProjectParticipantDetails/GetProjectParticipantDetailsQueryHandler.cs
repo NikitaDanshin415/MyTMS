@@ -28,7 +28,7 @@ namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantDetail
         {
             var projectParticipant = await _dbContext.ProjectParticipants
                 .Where(p => p.UserId == request.UserId 
-                            && p.Id == request.Id)
+                            && p.ProjectId == request.Id)
                 .ProjectTo<ProjectParticipantDetailsVm>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
