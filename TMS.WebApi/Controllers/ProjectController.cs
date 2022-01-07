@@ -28,15 +28,7 @@ namespace TMS.WebApi.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        ///  Получение списка всех проектов пользователя.
-        /// </summary>
-        /// <remarks>
-        /// GET /project
-        /// </remarks>
-        /// <returns>Returns ProjectListVm</returns>
-        /// <response code="200">Success</response>
-        /// <response code="401">Пользователь не авторизован</response>
+    
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -53,8 +45,7 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
-        [ApiVersion("1.0")]
-        [ApiVersion("2.0")]
+ 
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<ProjectListVm>> Get(Guid id)

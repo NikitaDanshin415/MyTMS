@@ -13,7 +13,8 @@ namespace TMS.Application.Project.Commands.CreateProject
     /***
      * Логика создания проекта, на освное информации из запроса.
      */
-    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Guid>
+    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Domain.Project
+        >
     {
         private readonly ITmsDbContext _DbContext;
 
@@ -25,7 +26,7 @@ namespace TMS.Application.Project.Commands.CreateProject
         /***
          * Формируем проект из запроса и возвращаем id созданного проекта.
          */
-        public async Task<Guid> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Project> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             var project = new Domain.Project
             {
@@ -57,7 +58,7 @@ namespace TMS.Application.Project.Commands.CreateProject
             await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
             await _DbContext.SaveChangesAsync(cancellationToken);
             
-            return project.Id;
+            return project;
         }
     }
 }
