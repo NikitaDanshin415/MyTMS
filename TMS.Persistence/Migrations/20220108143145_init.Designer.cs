@@ -10,8 +10,8 @@ using TMS.Persistence;
 namespace TMS.Persistence.Migrations
 {
     [DbContext(typeof(TmsDbContext))]
-    [Migration("20220108140906_TestStepsResult")]
-    partial class TestStepsResult
+    [Migration("20220108143145_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,14 +145,39 @@ namespace TMS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TestCaseResultResultId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TestPlanCasesId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TestCaseResultResultId");
 
                     b.HasIndex("TestPlanCasesId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("TestCaseResults");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestCaseResultResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ResultName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestCaseResultResults");
                 });
 
             modelBuilder.Entity("TMS.Domain.TestCaseStep", b =>
@@ -342,13 +367,27 @@ namespace TMS.Persistence.Migrations
 
             modelBuilder.Entity("TMS.Domain.TestCaseResult", b =>
                 {
+                    b.HasOne("TMS.Domain.TestCaseResultResult", "TestCaseResultResult")
+                        .WithMany()
+                        .HasForeignKey("TestCaseResultResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TMS.Domain.TestPlanCases", "TestPlanCase")
                         .WithMany()
                         .HasForeignKey("TestPlanCasesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TMS.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("TestCaseResultResult");
+
                     b.Navigation("TestPlanCase");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TMS.Domain.TestCaseStep", b =>
