@@ -5,7 +5,7 @@ namespace TMS.Domain
 {
     public class ProjectRole
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string RoleName { get; set; }
 
     }

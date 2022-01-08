@@ -21,9 +21,10 @@ namespace TMS.Persistence.Migrations
 
             modelBuilder.Entity("TMS.Domain.Project", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("AdditionDate")
                         .HasColumnType("datetime2");
@@ -43,26 +44,23 @@ namespace TMS.Persistence.Migrations
 
             modelBuilder.Entity("TMS.Domain.ProjectParticipants", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AdditionToProject")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProjectRoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProjectRoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("ProjectId", "UserId");
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("ProjectRoleId");
 
@@ -73,9 +71,10 @@ namespace TMS.Persistence.Migrations
 
             modelBuilder.Entity("TMS.Domain.ProjectRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
@@ -100,6 +99,207 @@ namespace TMS.Persistence.Migrations
                     b.ToTable("ProjectStatus");
                 });
 
+            modelBuilder.Entity("TMS.Domain.TestCase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TestCases");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestCaseResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AdditionDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TestCaseResultResultId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TestPlanCasesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCaseResultResultId");
+
+                    b.HasIndex("TestPlanCasesId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TestCaseResults");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestCaseResultResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ResultName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestCaseResultResults");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestCaseStep", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reaction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TestCaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCaseId");
+
+                    b.ToTable("TestCaseSteps");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AdditionDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("SatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TestPlans");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestPlanCases", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("TestCaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TestPlanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCaseId");
+
+                    b.HasIndex("TestPlanId");
+
+                    b.ToTable("TestPlanCases");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestPlanStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StatusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TestPlanStatus");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestStepResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FactReaction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reaction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TestCaseResultId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCaseResultId");
+
+                    b.ToTable("TestStepResults");
+                });
+
             modelBuilder.Entity("TMS.Domain.User", b =>
                 {
                     b.Property<string>("Id")
@@ -113,7 +313,7 @@ namespace TMS.Persistence.Migrations
             modelBuilder.Entity("TMS.Domain.Project", b =>
                 {
                     b.HasOne("TMS.Domain.ProjectStatus", "ProjectStatus")
-                        .WithMany("Projects")
+                        .WithMany()
                         .HasForeignKey("ProjectStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -124,48 +324,128 @@ namespace TMS.Persistence.Migrations
             modelBuilder.Entity("TMS.Domain.ProjectParticipants", b =>
                 {
                     b.HasOne("TMS.Domain.Project", "Project")
-                        .WithMany("UserProjectRoles")
+                        .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TMS.Domain.ProjectRole", "ProjectRoles")
-                        .WithMany("ProjectRoles")
+                    b.HasOne("TMS.Domain.ProjectRole", "ProjectRole")
+                        .WithMany()
                         .HasForeignKey("ProjectRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TMS.Domain.User", "User")
-                        .WithMany("UserProjectRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Project");
 
-                    b.Navigation("ProjectRoles");
+                    b.Navigation("ProjectRole");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TMS.Domain.Project", b =>
+            modelBuilder.Entity("TMS.Domain.TestCase", b =>
                 {
-                    b.Navigation("UserProjectRoles");
+                    b.HasOne("TMS.Domain.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TMS.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TMS.Domain.ProjectRole", b =>
+            modelBuilder.Entity("TMS.Domain.TestCaseResult", b =>
                 {
-                    b.Navigation("ProjectRoles");
+                    b.HasOne("TMS.Domain.TestCaseResultResult", "TestCaseResultResult")
+                        .WithMany()
+                        .HasForeignKey("TestCaseResultResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TMS.Domain.TestPlanCases", "TestPlanCase")
+                        .WithMany()
+                        .HasForeignKey("TestPlanCasesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TMS.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("TestCaseResultResult");
+
+                    b.Navigation("TestPlanCase");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TMS.Domain.ProjectStatus", b =>
+            modelBuilder.Entity("TMS.Domain.TestCaseStep", b =>
                 {
-                    b.Navigation("Projects");
+                    b.HasOne("TMS.Domain.TestCase", "TestCase")
+                        .WithMany()
+                        .HasForeignKey("TestCaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestCase");
                 });
 
-            modelBuilder.Entity("TMS.Domain.User", b =>
+            modelBuilder.Entity("TMS.Domain.TestPlan", b =>
                 {
-                    b.Navigation("UserProjectRoles");
+                    b.HasOne("TMS.Domain.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TMS.Domain.TestPlanStatus", "Satus")
+                        .WithMany()
+                        .HasForeignKey("SatusId");
+
+                    b.HasOne("TMS.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Satus");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestPlanCases", b =>
+                {
+                    b.HasOne("TMS.Domain.TestCase", "TestCase")
+                        .WithMany()
+                        .HasForeignKey("TestCaseId");
+
+                    b.HasOne("TMS.Domain.TestPlan", "TestPlan")
+                        .WithMany()
+                        .HasForeignKey("TestPlanId");
+
+                    b.Navigation("TestCase");
+
+                    b.Navigation("TestPlan");
+                });
+
+            modelBuilder.Entity("TMS.Domain.TestStepResult", b =>
+                {
+                    b.HasOne("TMS.Domain.TestCaseResult", "TestCaseResult")
+                        .WithMany()
+                        .HasForeignKey("TestCaseResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestCaseResult");
                 });
 #pragma warning restore 612, 618
         }

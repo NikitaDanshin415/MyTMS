@@ -23,17 +23,21 @@ namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantDetail
             _mapper = mapper;
         }
 
-        public async Task<ProjectParticipantDetailsVm> Handle(GetProjectParticipantDetailsQuery request, 
-            CancellationToken cancellationToken)
-        {
-            var projectParticipant = await _dbContext.ProjectParticipants
-                .Where(p => p.UserId == request.UserId 
-                            && p.ProjectId == request.Id)
-                .ProjectTo<ProjectParticipantDetailsVm>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+        //public async Task<ProjectParticipantDetailsVm> Handle(GetProjectParticipantDetailsQuery request, 
+        //    CancellationToken cancellationToken)
+        //{
+        //    var projectParticipant = await _dbContext.ProjectParticipants
+        //        .Where(p => p.UserId == request.UserId 
+        //                    && p.ProjectId == request.Id)
+        //        .ProjectTo<ProjectParticipantDetailsVm>(_mapper.ConfigurationProvider)
+        //        .ToListAsync(cancellationToken);
 
             
-            return _mapper.Map<ProjectParticipantDetailsVm>(projectParticipant.First());
+        //    return _mapper.Map<ProjectParticipantDetailsVm>(projectParticipant.First());
+        //}
+        public Task<ProjectParticipantDetailsVm> Handle(GetProjectParticipantDetailsQuery request, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace TMS.WebApi.Controllers
  
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<ProjectListVm>> Get(Guid id)
+        public async Task<ActionResult<ProjectListVm>> Get(int id)
         {
             var query = new GetProjectDetailsQuery()
             {

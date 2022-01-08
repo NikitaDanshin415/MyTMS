@@ -22,15 +22,16 @@ namespace TMS.Application.ProjectRole.Queries.GetProjectRoleDetails
 
         public async Task<ProjectRoleDetailsVm> Handle(GetProjectRoleDetailsQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.ProjectRoles
-                .FirstOrDefaultAsync(projectRole => projectRole.Id == request.Id, cancellationToken);
+            //var entity = await _dbContext.ProjectRoles
+            //    .FirstOrDefaultAsync(projectRole => projectRole.Id == request.Id, cancellationToken);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(Domain.ProjectRole), request.Id);
-            }
-            
-            return _mapper.Map<ProjectRoleDetailsVm>(entity);
+            //if (entity == null)
+            //{
+            //    throw new NotFoundException(nameof(Domain.ProjectRole), request.Id);
+            //}
+
+            //return _mapper.Map<ProjectRoleDetailsVm>(entity);
+            throw new System.NotImplementedException();
         }
     }
 }

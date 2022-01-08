@@ -24,12 +24,13 @@ namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList
         public async Task<ProjectParticipantListVm> Handle(GetProjectParticipantListQuery request,
             CancellationToken cancellationToken)
         {
-            var projectParticipant = await _dbContext.ProjectParticipants
-                .Where(p => p.UserId == request.UserId)
-                .ProjectTo<ProjectParticipantLookupDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            //var projectParticipant = await _dbContext.ProjectParticipants
+            //    .Where(p => p.UserId == request.UserId)
+            //    .ProjectTo<ProjectParticipantLookupDto>(_mapper.ConfigurationProvider)
+            //    .ToListAsync(cancellationToken);
 
-            return new ProjectParticipantListVm{ProjectParticipant = projectParticipant};
-    }
+            //return new ProjectParticipantListVm{ProjectParticipant = projectParticipant};
+            throw new System.NotImplementedException();
+        }
     }
 }

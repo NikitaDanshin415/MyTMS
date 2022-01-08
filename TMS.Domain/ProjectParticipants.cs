@@ -4,16 +4,13 @@ namespace TMS.Domain
 {
     public class ProjectParticipants
     {
-        public DateTime AdditionToProject { get; set; }
-
-        public Guid Id { get; set; }
-        public string UserId { get; set; }
-        public User User { get; set; }
-
-        public Guid ProjectId { get; set; }
+        public int Id { get; set; }
         public Project Project { get; set; }
+        public int ProjectId { get; set; }
+        public User User { get; set; }
+        public string UserId { get; set; }
 
-        public Guid ProjectRoleId { get; set; }
         public ProjectRole ProjectRole { get; set; }
+        public int ProjectRoleId { get; set; }
     }
 }

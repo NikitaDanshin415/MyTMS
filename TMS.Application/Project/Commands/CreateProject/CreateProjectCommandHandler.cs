@@ -13,8 +13,7 @@ namespace TMS.Application.Project.Commands.CreateProject
     /***
      * Логика создания проекта, на освное информации из запроса.
      */
-    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Domain.Project
-        >
+    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Domain.Project>
     {
         private readonly ITmsDbContext _DbContext;
 
@@ -28,37 +27,37 @@ namespace TMS.Application.Project.Commands.CreateProject
          */
         public async Task<Domain.Project> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-            var project = new Domain.Project
-            {
-                ProjectName = request.ProjectName,
-                Id = Guid.NewGuid(),
-                AdditionDate = DateTime.Now,
-                ProjectStatusId = 1
-            };
-            
-            //Ищем роль создателя проекта
-            var role = await _DbContext.ProjectRoles.FirstOrDefaultAsync(projectRole =>
-                projectRole.RoleName == "Admin", cancellationToken);
+            //var project = new Domain.Project
+            //{
+            //    ProjectName = request.ProjectName,
+            //    AdditionDate = DateTime.Now,
+            //    ProjectStatusId = 1
+            //};
 
-            //если Роль админ не найдена, возвращаем ошибку
-            if (role == null)
-            {
-                throw new NotFoundException(nameof(Project), request.UserId);
-            }
+            ////Ищем роль создателя проекта
+            //var role = await _DbContext.ProjectRoles.FirstOrDefaultAsync(projectRole =>
+            //    projectRole.Id == 1, cancellationToken);
 
-            var userProjectRole = new ProjectParticipants
-            {
-                UserId = request.UserId.ToString(), 
-                ProjectId = project.Id,
-                ProjectRoleId = role.Id, 
-                AdditionToProject = DateTime.Now,
-            };
+            ////если Роль
+            ////не найдена, возвращаем ошибку
+            //if (role == null)
+            //{
+            //    throw new NotFoundException(nameof(Project), request.UserId);
+            //}
 
-            await _DbContext.Projects.AddAsync(project, cancellationToken);
-            await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
-            await _DbContext.SaveChangesAsync(cancellationToken);
-            
-            return project;
+            //var userProjectRole = new ProjectParticipants
+            //{
+            //    UserId = request.UserId.ToString(),
+            //    ProjectRoleId = role.Id, 
+            //    AdditionToProject = DateTime.Now,
+            //};
+
+            //await _DbContext.Projects.AddAsync(project, cancellationToken);
+            //await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
+            //await _DbContext.SaveChangesAsync(cancellationToken);
+
+            //return project;
+            throw new System.NotImplementedException();
         }
     }
 }

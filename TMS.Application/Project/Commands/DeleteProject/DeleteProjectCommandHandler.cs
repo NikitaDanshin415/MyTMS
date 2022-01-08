@@ -17,19 +17,23 @@ namespace TMS.Application.Project.Commands.DeleteProject
             _dbContext = dbContext;
         }
 
-        public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+        //public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+        //{
+        //    var entity = await _dbContext.Projects.FindAsync(new object[] {request.Id}, cancellationToken);
+
+        //    if (entity == null)
+        //    {
+        //        throw new NotFoundException(nameof(entity), request.Id);
+        //    }
+
+        //    _dbContext.Projects.Remove(entity);
+        //    await _dbContext.SaveChangesAsync(cancellationToken);
+
+        //    return Unit.Value;
+        //}
+        public Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Projects.FindAsync(new object[] {request.Id}, cancellationToken);
-
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(entity), request.Id);
-            }
-
-            _dbContext.Projects.Remove(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            throw new System.NotImplementedException();
         }
     }
 }
