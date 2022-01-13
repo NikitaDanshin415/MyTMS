@@ -9,6 +9,8 @@ namespace TMS.Domain
         public int ProjectId { get; set; }
         public User User { get; set; }
         public string UserId { get; set; }
+        public DateTime AdditionToProject { get; set; }
+
 
         public ProjectRole ProjectRole { get; set; }
         public int ProjectRoleId { get; set; }

@@ -20,25 +20,17 @@ namespace TMS.Application.TestPlan.Queries.GetTestPlanList
             _mapper = mapper;
         }
 
-        //public async Task<TestPlanListVm> Handle(GetTestPlanListQuery request, CancellationToken cancellationToken)
-        //{
-
-        //    var projectParticipant = await _dbContext.ProjectParticipants
-        //        .FirstOrDefaultAsync(e => e.ProjectId == request.ProjectId && e.UserId == request.UserId, cancellationToken: cancellationToken);
-
-
-        //    var testPlans = await _dbContext.TestPlans
-        //        .Where(e => e.ProjectParticipantId == projectParticipant.Id)
-        //        .ProjectTo<TestPlanListDto>(_mapper.ConfigurationProvider)
-        //        .ToListAsync(cancellationToken);
-
-        //    return new TestPlanListVm { TestPlans = testPlans };
-
-
-        //}
-        public Task<TestPlanListVm> Handle(GetTestPlanListQuery request, CancellationToken cancellationToken)
+        public async Task<TestPlanListVm> Handle(GetTestPlanListQuery request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var testPlans = await _dbContext.TestPlans
+                .Where(e => e.ProjectId == request.ProjectId)
+                .ProjectTo<TestPlanListDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+            
+
+            return new TestPlanListVm { TestPlans = testPlans };
         }
+
+
     }
 }

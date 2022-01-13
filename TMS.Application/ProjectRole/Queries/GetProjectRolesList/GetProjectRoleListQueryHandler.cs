@@ -24,13 +24,13 @@ namespace TMS.Application.ProjectRole.Queries.GetProjectRolesList
         public async Task<ProjectRoleListVm> Handle(GetProjectRoleListQuery request, CancellationToken cancellationToken)
         {
 
-            //var projectRoleQuery = await _dbContext.ProjectRoles
-            //    .ProjectTo<ProjectRoleLookupDto>(_mapper.ConfigurationProvider)
-            //    .ToListAsync(cancellationToken);
+            var projectRoleQuery = await _dbContext.ProjectRoles
+                .ProjectTo<ProjectRoleLookupDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
 
 
-            //return new ProjectRoleListVm() { ProjectRoles = projectRoleQuery };
-            throw new System.NotImplementedException();
+            return new ProjectRoleListVm() { ProjectRoles = projectRoleQuery };
+
         }
     }
 }

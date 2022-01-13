@@ -2,11 +2,11 @@
 using System.Text.Json.Serialization;
 using AutoMapper;
 using TMS.Application.Common.Mapping;
-using TMS.Domain;
+using TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList;
 
-namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList
+namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsUserList
 {
-    public class ProjectParticipantLookupDto : IMapWith<Domain.ProjectParticipants>
+    public class GetProjectParticipantsUserListLookupDto : IMapWith<Domain.ProjectParticipants>
     {
         public DateTime AdditionToProject { get; set; }
         public int Id { get; set; }
@@ -16,18 +16,18 @@ namespace TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList
         public int ProjectId { get; set; }
         [JsonIgnore]
         public int ProjectRoleId { get; set; }
-        public Domain.Project Project { get; set; }
+        public Domain.User User{ get; set; }
         public Domain.ProjectRole ProjectRole { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.ProjectParticipants, ProjectParticipantLookupDto>()
+            profile.CreateMap<Domain.ProjectParticipants, GetProjectParticipantsUserListLookupDto>()
                 .ForMember(projectParticipant => projectParticipant.Id,
                     opt => opt.MapFrom(pp => pp.Id))
 
                 .ForMember(projectParticipant => projectParticipant.AdditionToProject,
                     opt => opt.MapFrom(pp => pp.AdditionToProject))
-                
+
                 .ForMember(projectParticipant => projectParticipant.UserId,
                     opt => opt.MapFrom(pp => pp.UserId))
 

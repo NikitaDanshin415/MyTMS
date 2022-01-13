@@ -13,7 +13,8 @@ namespace TMS.Application.TestPlan.Commands.CreateTestPlan
                 createTestPlanCommand.Description).NotEmpty();
 
             RuleFor(createTestPlanCommand =>
-                createTestPlanCommand.ProjectParticipantId).NotEmpty();
+                createTestPlanCommand.ProjectId).NotEmpty();
+
         }
     }
 }

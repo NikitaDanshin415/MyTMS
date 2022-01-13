@@ -25,25 +25,23 @@ namespace TMS.Application.Project.Queries.GetProjectList
 
         public async Task<ProjectListVm> Handle(GetProjectListQuery request, CancellationToken cancellationToken)
         {
-            //var projectsParticipant1 = await _dbContext.Projects.Join(_dbContext.ProjectParticipants,
-            //        p => p.Id,
-            //        c => c.ProjectId,
-            //        (p, c) =>
-            //            new ProjectLookupDto
-            //            {
-            //                Id = p.Id,
-            //                ProjectName = p.ProjectName,
-            //                ProjectStatusId = p.ProjectStatusId,
-            //                UserId = c.UserId,
-            //                Date = p.AdditionDate
-            //            })
-            //    .Where(e => e.UserId == request.UserId)
-            //    //.ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
-            //    .ToListAsync(cancellationToken);
+            var projectsParticipant1 = await _dbContext.Projects.Join(_dbContext.ProjectParticipants,
+                    p => p.Id,
+                    c => c.ProjectId,
+                    (p, c) =>
+                        new ProjectLookupDto
+                        {
+                            Id = p.Id,
+                            ProjectName = p.ProjectName,
+                            ProjectStatusId = p.ProjectStatusId,
+                            UserId = c.UserId,
+                            Date = p.AdditionDate
+                        })
+                .Where(e => e.UserId == request.UserId)
+                //.ProjectTo<ProjectLookupDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
 
-
-            throw new System.NotImplementedException();
-            //return new ProjectListVm {Projects = projectsParticipant1 };
+            return new ProjectListVm { Projects = projectsParticipant1 };
         }
     }
 

@@ -18,23 +18,32 @@ namespace TMS.Application.Project.Commands.UpdateProject
 
         public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            ////Ищем в бд проект
-            //var entity =
-            //    await _dbContext.Projects.FirstOrDefaultAsync(project => project.Id == request.Id, cancellationToken);
+            //Ищем в бд проект
+            var entity =
+                await _dbContext.Projects.FirstOrDefaultAsync(project => project.Id == request.ProjectId, cancellationToken);
 
-            ////если проект не найден или автор проекта и пользовательне совпадают, возвращаем исключение
-            //if (entity == null)
-            //{
-            //    throw new NotFoundException(nameof(Project), request.Id);
-            //}
+            //если проект не найден или автор проекта и пользовательне совпадают, возвращаем исключение
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof(Project), request.ProjectId);
+            }
 
-            //entity.ProjectName = request.ProjectName;
-            //entity.ProjectStatusId = request.ProjectStatusId;
+            if (entity.ProjectName != request.ProjectName)
+            {
+                entity.ProjectName = request.ProjectName;
+            }
 
-            //await _dbContext.SaveChangesAsync(cancellationToken);
+            if (entity.ProjectStatusId != request.ProjectStatusId 
+                && request.ProjectStatusId != 0)
+            {
+                entity.ProjectStatusId = request.ProjectStatusId;
+            }
+            
 
-            //return Unit.Value;
-            throw new System.NotImplementedException();
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
+
         }
     }
 }

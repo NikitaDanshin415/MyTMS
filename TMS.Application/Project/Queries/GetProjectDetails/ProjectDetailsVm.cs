@@ -6,7 +6,7 @@ namespace TMS.Application.Project.Queries.GetProjectDetails
 {
     public class ProjectDetailsVm : IMapWith<Domain.Project>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string ProjectName { get; set; }
         public DateTime AdditionDate { get; set; }
         public int ProjectStatusId { get; set; }

@@ -33,6 +33,7 @@ namespace TMS.WebApi.Controllers
         public async Task<ActionResult<int>> Create([FromBody] CreateTestPlanDto createTestPlanDto)
         {
             var command = _mapper.Map<CreateTestPlanCommand>(createTestPlanDto);
+            command.UserId = UserId;
             var projectId = await Mediator.Send(command);
 
             return Ok(projectId);
@@ -40,14 +41,14 @@ namespace TMS.WebApi.Controllers
 
         [ApiVersion("1.0")]
         [ApiVersion("2.0")]
-        [HttpGet("{id}")]
+        [HttpGet("{projectId}")]
         [Authorize]
-        public async Task<ActionResult<int>> GetAll(Guid Projectid)
+        public async Task<ActionResult<int>> GetAll(int projectId)
         {
             var query = new GetTestPlanListQuery()
             {
                 UserId = UserId,
-                ProjectId = Projectid
+                ProjectId = projectId
             };
             var vm = await Mediator.Send(query);
 

@@ -16,8 +16,9 @@ namespace TMS.WebApi.Models.TestPlan
         [Required]
         public string Description { get; set; }
 
+        public string UserId { get; set; }
         [Required]
-        public string ProjectParticipantId { get; set; }
+        public int ProjectId { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -26,8 +27,8 @@ namespace TMS.WebApi.Models.TestPlan
                     opt => opt.MapFrom(testPlanDto => testPlanDto.TestPlanName))
                 .ForMember(testPlanCommand => testPlanCommand.Description,
                 opt => opt.MapFrom(testPlanDto => testPlanDto.Description))
-                .ForMember(testPlanCommand => testPlanCommand.ProjectParticipantId,
-                    opt => opt.MapFrom(testPlanDto => testPlanDto.ProjectParticipantId));
+                .ForMember(testPlanCommand => testPlanCommand.ProjectId,
+                    opt => opt.MapFrom(testPlanDto => testPlanDto.ProjectId));
         }
     }
 }

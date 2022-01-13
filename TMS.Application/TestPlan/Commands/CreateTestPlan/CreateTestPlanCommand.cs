@@ -7,6 +7,7 @@ namespace TMS.Application.TestPlan.Commands.CreateTestPlan
     {
         public string TestPlanName { get; set; }
         public string Description { get; set; }
-        public Guid ProjectParticipantId { get; set; }
+        public int ProjectId { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -28,14 +28,14 @@ namespace TMS.WebApi.Controllers
             _mapper = mapper;
         }
 
-    
+
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<ProjectListVm>> GetAll()
         {
-            
+
             var query = new GetProjectListQuery
             {
                 UserId = UserId
@@ -45,7 +45,7 @@ namespace TMS.WebApi.Controllers
             return Ok(vm);
         }
 
- 
+
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<ProjectListVm>> Get(int id)
@@ -53,18 +53,25 @@ namespace TMS.WebApi.Controllers
             var query = new GetProjectDetailsQuery()
             {
                 UserId = UserId,
-                Id = id
+                ProjectId = id
             };
-            var vm = await Mediator.Send(query);
 
-            return Ok(vm);
+            try
+            {
+                var vm = await Mediator.Send(query);
+                return Ok(vm);
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
         }
 
         [ApiVersion("1.0")]
         [ApiVersion("2.0")]
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Guid>> Create([FromBody] CreateProjectDto createProjectDto)
+        public async Task<ActionResult<int>> Create([FromBody] CreateProjectDto createProjectDto)
         {
             var command = _mapper.Map<CreateProjectCommand>(createProjectDto);
             command.UserId = UserId;
@@ -73,19 +80,20 @@ namespace TMS.WebApi.Controllers
             return Ok(projectId);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{ProjectId}")]
         [Authorize]
-        public async Task<ActionResult<Guid>> Create([FromBody] UpdateProjectDto updateProjectDto)
+        public async Task<ActionResult<int>> Update([FromBody] UpdateProjectDto updateProjectDto, int ProjectId)
         {
             var command = _mapper.Map<UpdateProjectCommand>(updateProjectDto);
             command.UserId = UserId;
+            command.ProjectId = ProjectId;
             await Mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult<Guid>> Delete(Guid id)
+        public async Task<ActionResult<int>> Delete(int id)
         {
             var command = new DeleteProjectCommand
             {

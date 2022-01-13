@@ -19,18 +19,20 @@ namespace TMS.Application.TestPlan.Commands.CreateTestPlan
         public async Task<Domain.TestPlan> Handle(CreateTestPlanCommand request, CancellationToken cancellationToken)
         {
 
-            //var testPlan = new Domain.TestPlan
-            //{
-            //    TestPlanName = request.TestPlanName,
-            //    Description = request.Description,
-            //    AdditionDateTime = DateTime.Now,
-            //};
+            var testPlan = new Domain.TestPlan
+            {
+                ProjectId = request.ProjectId,
+                TestPlanName = request.TestPlanName,
+                Description = request.Description,
+                AdditionDateTime = DateTime.Now,
+                UserId = request.UserId
+            };
 
-            //await _DbContext.TestPlans.AddAsync(testPlan, cancellationToken);
-            //await _DbContext.SaveChangesAsync(cancellationToken);
+            await _DbContext.TestPlans.AddAsync(testPlan, cancellationToken);
+            await _DbContext.SaveChangesAsync(cancellationToken);
 
-            //return testPlan;
-            throw new System.NotImplementedException();
+            return testPlan;
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TMS.Domain;
 using Microsoft.EntityFrameworkCore;
 using TMS.Application.Interfaces;
+using TMS.Persistence.EntityTypeConfiguration;
 
 namespace TMS.Persistence
 {
@@ -30,6 +31,10 @@ namespace TMS.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectParticipantConfiguration());
+            modelBuilder.ApplyConfiguration(new ProjectStatusConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

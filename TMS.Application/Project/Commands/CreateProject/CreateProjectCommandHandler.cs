@@ -27,37 +27,40 @@ namespace TMS.Application.Project.Commands.CreateProject
          */
         public async Task<Domain.Project> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-            //var project = new Domain.Project
-            //{
-            //    ProjectName = request.ProjectName,
-            //    AdditionDate = DateTime.Now,
-            //    ProjectStatusId = 1
-            //};
+            var project = new Domain.Project
+            {
+                ProjectName = request.ProjectName,
+                AdditionDate = DateTime.Now,
+                ProjectStatusId = 1
+            };
+            await _DbContext.Projects.AddAsync(project, cancellationToken);
+            await _DbContext.SaveChangesAsync(cancellationToken);
 
-            ////Ищем роль создателя проекта
-            //var role = await _DbContext.ProjectRoles.FirstOrDefaultAsync(projectRole =>
-            //    projectRole.Id == 1, cancellationToken);
+            //--------------------------------------------------------------------
 
-            ////если Роль
-            ////не найдена, возвращаем ошибку
-            //if (role == null)
-            //{
-            //    throw new NotFoundException(nameof(Project), request.UserId);
-            //}
+            //Ищем роль создателя проекта
+            var role = await _DbContext.ProjectRoles.FirstOrDefaultAsync(projectRole =>
+                projectRole.Id == 1, cancellationToken);
 
-            //var userProjectRole = new ProjectParticipants
-            //{
-            //    UserId = request.UserId.ToString(),
-            //    ProjectRoleId = role.Id, 
-            //    AdditionToProject = DateTime.Now,
-            //};
+            //если Роль, не найдена, возвращаем ошибку
+            if (role == null)
+            {
+                throw new NotFoundException(nameof(Project), request.UserId);
+            }
 
-            //await _DbContext.Projects.AddAsync(project, cancellationToken);
-            //await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
-            //await _DbContext.SaveChangesAsync(cancellationToken);
+            var userProjectRole = new ProjectParticipants
+            {
+                ProjectId = project.Id,
+                UserId = request.UserId.ToString(),
+                ProjectRoleId = role.Id,
+                AdditionToProject = DateTime.Now,
+            };
 
-            //return project;
-            throw new System.NotImplementedException();
+
+            await _DbContext.ProjectParticipants.AddAsync(userProjectRole, cancellationToken);
+            await _DbContext.SaveChangesAsync(cancellationToken);
+
+            return project;
         }
     }
 }

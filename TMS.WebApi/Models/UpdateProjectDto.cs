@@ -14,7 +14,7 @@ namespace TMS.WebApi.Models
         public void Mapping(Profile profile)
         {
             profile.CreateMap<UpdateProjectDto, UpdateProjectCommand>()
-                .ForMember(projectDto => projectDto.Id,
+                .ForMember(projectDto => projectDto.ProjectId,
                     opt => opt.MapFrom(noteDto => noteDto.Id))
                 .ForMember(projectDto => projectDto.ProjectName,
                     opt => opt.MapFrom(noteDto => noteDto.ProjectName))
