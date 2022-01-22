@@ -4,10 +4,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TMS.Application.Project.Commands.CreateProject;
 using TMS.Application.Project.Queries.GetProjectList;
+using TMS.Application.ProjectParticipant.Commands.CreateProjectParticipant;
+using TMS.Application.ProjectParticipant.Commands.DeleteProjectParticipant;
 using TMS.Application.ProjectParticipant.Queries.GetProjectParticipantDetails;
 using TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsList;
 using TMS.Application.ProjectParticipant.Queries.GetProjectParticipantsUserList;
+using TMS.WebApi.Models.ProjectParticipant;
 
 namespace TMS.WebApi.Controllers
 {
@@ -73,6 +77,34 @@ namespace TMS.WebApi.Controllers
 
             return Ok(vm);
         }
+
+
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<int>> Create([FromBody] CreateProjectParticipantDto createProjectParticipantDto)
+        {
+            var command = _mapper.Map<CreateProjectParticipantCommand>(createProjectParticipantDto);
+            var projectId = await Mediator.Send(command);
+
+            return Ok(projectId);
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<int>> Delete(int id)
+        {
+            var command = new DeleteProjectParticipantCommand()
+            {
+                Id = id,
+                UserId = UserId
+            };
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
 
     }
 }
