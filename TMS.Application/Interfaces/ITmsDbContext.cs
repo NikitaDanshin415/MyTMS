@@ -10,7 +10,7 @@ namespace TMS.Application.Interfaces
     {
         public DbSet<Domain.Project> Projects { get; set; }
         public DbSet<ProjectStatus> ProjectStatus { get; set; }
-        public DbSet<TestCase> TestCases { get; set; }
+        public DbSet<Domain.TestCase> TestCases { get; set; }
         public DbSet<Domain.TestPlan> TestPlans { get; set; }
         public DbSet<TestPlanStatus> TestPlanStatus { get; set; }
         public DbSet<TestPlanCases> TestPlanCases { get; set; }

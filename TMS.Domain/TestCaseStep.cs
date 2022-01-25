@@ -7,6 +7,5 @@
         public string Reaction { get; set; }
 
         public int TestCaseId { get; set; }
-        public TestCase TestCase { get; set; }
     }
 }

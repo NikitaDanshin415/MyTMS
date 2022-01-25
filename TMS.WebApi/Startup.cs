@@ -64,6 +64,7 @@ namespace TMS.WebApi
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
                ConfigureSwaggerOptions>();
 
+
             services.AddSwaggerGen();
             services.AddApiVersioning();
 

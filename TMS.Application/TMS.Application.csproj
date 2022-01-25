@@ -25,6 +25,7 @@
     <Folder Include="Common\Behaviors\" />
     <Folder Include="ProjectRole\Commands\" />
     <Folder Include="ProjectRole\Queries\GetProjectRolesList\" />
+    <Folder Include="TestCase\Commands\" />
     <Folder Include="TestPlan\Commands\DeleteTestPlan\" />
     <Folder Include="TestPlan\Commands\UpdateTestPlan\" />
     <Folder Include="TestPlan\Queries\GetTestPlanDetails\" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TMS.Domain
 {
@@ -13,6 +14,7 @@ namespace TMS.Domain
 
         public User User { get; set; }
         public string UserId { get; set; }
-        
+        public List<TestCaseStep> Steps { get; set; } = new List<TestCaseStep>();
+
     }
 }
