@@ -9,6 +9,7 @@ namespace TMS.Application.TestCase.Queries.GetTestCaseList
     {
         public int Id { get; set; }
         public string Date { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public int ProjectId { get; set; }
         [JsonIgnore]
@@ -26,6 +27,8 @@ namespace TMS.Application.TestCase.Queries.GetTestCaseList
                     opt => opt.MapFrom(tc => tc.ProjectId))
                 .ForMember(testCaseDto => testCaseDto.UserId,
                     opt => opt.MapFrom(tc => tc.UserId))
+                .ForMember(testCaseDto => testCaseDto.Name,
+                    opt => opt.MapFrom(tc => tc.Name))
                 .ForMember(testCaseDto => testCaseDto.Id,
                     opt => opt.MapFrom(tc => tc.Id));
         }

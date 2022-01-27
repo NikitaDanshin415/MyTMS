@@ -26,12 +26,6 @@ namespace TMS.Application.TestCase.Queries.GetTestCaseDetails
                 .FirstOrDefaultAsync(e => e.Id == request.TestCaseId, cancellationToken);
 
 
-            //var steps = await _dbContext.TestCaseSteps
-            //    .Where(e => e.TestCaseId == request.TestCaseId)
-            //    .ToListAsync(cancellationToken);
-
-            //testCaseDetails.Steps = steps;
-
             return _mapper.Map<TestCaseDetailsVm>(testCaseDetails);
             
         }

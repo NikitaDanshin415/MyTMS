@@ -11,7 +11,7 @@ namespace TMS.Application.TestCase.Queries.GetTestCaseDetails
         public int Id { get; set; }
         public string Date { get; set; }
         public string Description { get; set; }
-
+        public string Name { get; set; }
         public int ProjectId { get; set; }
 
         public string UserId { get; set; }
@@ -33,6 +33,9 @@ namespace TMS.Application.TestCase.Queries.GetTestCaseDetails
                 .ForMember(projectVm => projectVm.Steps,
                     opt =>
                         opt.MapFrom(project => project.Steps))
+                .ForMember(projectVm => projectVm.Name,
+                    opt =>
+                        opt.MapFrom(project => project.Name))
                 .ForMember(projectVm => projectVm.UserId,
                     opt =>
                         opt.MapFrom(project => project.UserId));
