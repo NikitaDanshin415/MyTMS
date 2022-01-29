@@ -4,10 +4,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TMS.Application.Project.Commands.CreateProject;
 using TMS.Application.Project.Queries.GetProjectDetails;
 using TMS.Application.Project.Queries.GetProjectList;
+using TMS.Application.TestCase.Commands.CreateTestCase;
 using TMS.Application.TestCase.Queries.GetTestCaseDetails;
 using TMS.Application.TestCase.Queries.GetTestCaseList;
+using TMS.WebApi.Models.TestCase;
 
 namespace TMS.WebApi.Controllers
 {
@@ -62,6 +65,20 @@ namespace TMS.WebApi.Controllers
             {
                 return NotFound();
             }
+        }
+
+
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<int>> Create([FromBody] CreateTestCaseDto createTestCaseDto)
+        {
+            var command = _mapper.Map<CreateTestCaseCommand>(createTestCaseDto);
+            command.UserId = UserId;
+            var projectId = await Mediator.Send(command);
+
+            return Ok(projectId);
         }
 
     }
