@@ -11,7 +11,6 @@ namespace TMS.Domain
 
 
         public int TestPlanCasesId { get; set; }
-        public TestPlanCases TestPlanCase { get; set; }
 
         public int TestCaseResultResultId { get; set; }
         public TestCaseResultResult TestCaseResultResult { get; set; }

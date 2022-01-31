@@ -5,11 +5,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Application.Project.Commands.CreateProject;
+using TMS.Application.Project.Commands.UpdateProject;
 using TMS.Application.Project.Queries.GetProjectDetails;
 using TMS.Application.Project.Queries.GetProjectList;
 using TMS.Application.TestCase.Commands.CreateTestCase;
+using TMS.Application.TestCase.Commands.DeleteTestCase;
+using TMS.Application.TestCase.Commands.UpdateTestCase;
 using TMS.Application.TestCase.Queries.GetTestCaseDetails;
 using TMS.Application.TestCase.Queries.GetTestCaseList;
+using TMS.WebApi.Models;
 using TMS.WebApi.Models.TestCase;
 
 namespace TMS.WebApi.Controllers
@@ -81,5 +85,42 @@ namespace TMS.WebApi.Controllers
             return Ok(projectId);
         }
 
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<int>> Delete(int id)
+        {
+            var command = new DeleteTestCaseCommand
+            {
+                TestCaseId = id,
+                UserId = UserId
+            };
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut("{testCaseId}")]
+        [Authorize]
+        public async Task<ActionResult<int>> Update([FromBody] UpdateTestCaseDto updateProjectDto, int testCaseId)
+        {
+            //var command = _mapper.Map<UpdateTestCaseDto>(updateProjectDto);
+            //command.UserId = UserId;
+            //command.Id = testCaseId;
+
+            var command = new UpdateTestCaseCommand
+            {
+                Date = DateTime.Now,
+                Description = updateProjectDto.Description,
+                Name = updateProjectDto.Name,
+                Id = testCaseId,
+                UserId = UserId,
+                ProjectId = updateProjectDto.ProjectId,
+                Steps = updateProjectDto.Steps
+            };
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
     }
 }
